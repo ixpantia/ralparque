@@ -2,10 +2,7 @@
 # Dockerfile para los artistas
 # Use Rocker r-base
 # https://raw.githubusercontent.com/rocker-org/rocker/master/r-base/Dockerfile
-# Without the emacs reference 
 ###############################################################################
-## Emacs, make this -*- mode: sh; -*-
-
 FROM debian:testing
 
 ## This handle reaches Carl and Dirk
@@ -75,6 +72,7 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/ss
 # SSH login fix. Otherwise user is kicked off after login
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
+### Set Up snow
 RUN install.r snow
 COPY . /usr/local/src/rscripts
 WORKDIR /usr/local/src/rscripts
@@ -83,5 +81,4 @@ WORKDIR /usr/local/src/rscripts
 # instancias de los artistas. 
 
 EXPOSE 22
-CMD ["/usr/sbin/sshd", "-D"]
-CMD ["Rscript", "artista.R"]
+CMD ["/bin/bash", "docker-entrypoint.sh"]
