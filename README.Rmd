@@ -118,24 +118,12 @@ artistas ya definidos arriba: incluimos la direccion IP en el código usando la
 funcion `makeCluster`.
 
 
-# Por hacer (TODO)
-## Conneccion automatica a los artistas
-Intenté hacer el paso arriba "passwordless", pero aún no no funciona. Lo que
+## Por hacer
+#### Conneccion automatica a los artistas
+TODO: Intenté hacer el paso arriba "passwordless", pero aún no no funciona. Lo que
 esperaba era que al usar ssh-copy-d para los tres artistas `snow::makeCluster`
 haría la coneccion de forma automatica.
 
-    root@dce8b92d2453:~# ssh-copy-id root@172.18.0.4
-    /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/root/.ssh/id_rsa.pub"
-    /usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
-    /usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
-    root@172.18.0.4's password: 
-
-    Number of key(s) added: 1
-
-    Now try logging into the machine, with:   "ssh 'root@172.18.0.4'"
-    and check to make sure that only the key(s) you wanted were added.
-
-### Orquestación Automática 
-
+#### Orquestación Automática 
 TODO: Orquestar los contenedores para que arranquen en conjunto usando Docker
 Compose, y quizas despues en combinación con Swarm.
