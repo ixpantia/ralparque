@@ -1,10 +1,12 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-ralparque
-=========
+R Al Parque
+===========
 
 Que es lo que obtienes cuando organizas una agrupacion (cluster) de roqueros (rockers)? Un festival!
 
 R Al Parque es una prueba de concepto para coordinar contenedores Docker y hacerlos trabajar en conjunto como un grupo (*EN:cluster*) de trabajadores R bajo coordinación del paquete `snow`. En este momento no le tenemos una aplicación otra que casos ejemplos, y si tienes una aplicación para la aproximación que describimos aquí nos encantaría escucharlo.
+
+Para hacerlo usamos contenedores [Docker](https://docker.com), con imagenes para R como disponibles en [Rocker](https://github.com/rocker-org/rocker) a los cuales incluimos [snow](https://cran.r-project.org/web/packages/snow/index.html).
 
 Referencia
 ----------
@@ -67,8 +69,8 @@ Y después incluimos tres actos en el festival
     $ sudo docker run --net simonbolivar --ip 172.18.0.03 --name fabulosos_cadillacs -it artista
     $ sudo docker run --net simonbolivar --ip 172.18.0.04 --name mana -it artista
 
-Orquestración Automatica.
-=========================
+Orquestración Automatica
+========================
 
 Docker Compose
 --------------

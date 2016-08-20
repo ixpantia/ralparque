@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# ralparque
+# R Al Parque
 
 Que es lo que obtienes cuando organizas una agrupacion (cluster) de roqueros
 (rockers)? Un festival!
@@ -24,6 +24,10 @@ hacerlos trabajar en conjunto como un grupo (*EN:cluster*) de trabajadores R
 bajo coordinación del paquete `snow`. En este momento no le tenemos una
 aplicación otra que casos ejemplos, y si tienes una aplicación para la
 aproximación que describimos aquí nos encantaría escucharlo.
+
+Para hacerlo usamos contenedores [Docker](https://docker.com), con imagenes
+para R como disponibles en [Rocker](https://github.com/rocker-org/rocker) a los 
+cuales incluimos [snow](https://cran.r-project.org/web/packages/snow/index.html).
 
 ## Referencia
 
@@ -53,9 +57,10 @@ contenedores separados.
 # Orquestración manual
 
 ## El Parque
-El primero paso es crear una red para los contenedores que vamos a iniciar. En otras
-palabras: necesitamos un parque para poner el podio. En Docker lo podemos 
-[hacer asi](http://stackoverflow.com/questions/27937185/assign-static-ip-to-docker-container/35359185#35359185)
+El primero paso es crear una red para los contenedores que vamos a iniciar. En
+otras palabras: necesitamos un parque para poner el podio. En Docker lo podemos
+[hacer
+asi](http://stackoverflow.com/questions/27937185/assign-static-ip-to-docker-container/35359185#35359185)
 
     $sudo docker network create --subnet=172.18.0.0/16 simonbolivar
 
@@ -71,12 +76,12 @@ El organizador tiene su Dockerfile propio.
 
     $ cd manual/organizador
     $ sudo docker build -t organizador .
-    $ sudo docker run -name duarte -ti organizador
+    $ sudo docker run --name duarte -it organizador
 
 ## Los artistas
 
-Nuestros artistas son los contenedores secundarios. Se construyen como instancias de un mismo Dockerfile
-
+Nuestros artistas son los contenedores secundarios. Se construyen como
+instancias de un mismo Dockerfile
 
 ### Arranca los artistas
 
@@ -87,11 +92,11 @@ Primero construimos la imagen genérica para los artistas
 
 Y después incluimos tres actos en el festival
 
-    $ sudo docker run --net simonbolivar --ip 172.18.0.02 --name aterciopelados -it artista
-    $ sudo docker run --net simonbolivar --ip 172.18.0.03 --name fabulosos_cadillacs -it artista
-    $ sudo docker run --net simonbolivar --ip 172.18.0.04 --name mana -it artista
+    $ sudo docker run -d -P --net simonbolivar --ip 172.18.0.2 --name aterciopelados -it artista
+    $ sudo docker run -d -P --net simonbolivar --ip 172.18.0.3 --name fabulosos_cadillacs -it artista
+    $ sudo docker run -d -P --net simonbolivar --ip 172.18.0.4 --name mana -it artista
 
-# Orquestración Automatica. 
+# Orquestración Automatica 
 
 ## Docker Compose
 
