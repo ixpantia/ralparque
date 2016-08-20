@@ -49,7 +49,7 @@ El organizador tiene su Dockerfile propio.
 
     $ cd manual/organizador
     $ sudo docker build -t organizador .
-    $ sudo docker run -name duarte -ti organizador
+    $ sudo docker run --name duarte -it organizador
 
 Los artistas
 ------------
@@ -65,9 +65,9 @@ Primero construimos la imagen genérica para los artistas
 
 Y después incluimos tres actos en el festival
 
-    $ sudo docker run --net simonbolivar --ip 172.18.0.02 --name aterciopelados -it artista
-    $ sudo docker run --net simonbolivar --ip 172.18.0.03 --name fabulosos_cadillacs -it artista
-    $ sudo docker run --net simonbolivar --ip 172.18.0.04 --name mana -it artista
+    $ sudo docker run -d -P --net simonbolivar --ip 172.18.0.2 --name aterciopelados -it artista
+    $ sudo docker run -d -P --net simonbolivar --ip 172.18.0.3 --name fabulosos_cadillacs -it artista
+    $ sudo docker run -d -P --net simonbolivar --ip 172.18.0.4 --name mana -it artista
 
 Orquestración Automatica
 ========================
