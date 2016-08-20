@@ -11,12 +11,11 @@ MAINTAINER "Frans van Dunné" frans.vandunne@gmail.com
 
 ###############################################################################
 ## Rocker base-r
-# MAINTAINER "Carl Boettiger and Dirk Eddelbuettel" rocker-maintainers@eddelbuettel.com
 
 #FROM debian:testing
 
 ## This handle reaches Carl and Dirk
-MAINTAINER "Carl Boettiger and Dirk Eddelbuettel" rocker-maintainers@eddelbuettel.com
+#MAINTAINER "Carl Boettiger and Dirk Eddelbuettel" rocker-maintainers@eddelbuettel.com
 
 ## Set a default user. Available via runtime flag `--user docker` 
 ## Add user to 'staff' group, granting them write privileges to /usr/local/lib/R/site.library
@@ -88,7 +87,6 @@ RUN echo 'root:artista' | chpasswd
 
 # Genera un par de llaves para poder ingresar remotamente
 RUN ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
-
 
 ## Fix PAM in sshd config 
 ## http://stackoverflow.com/questions/18173889/cannot-access-centos-sshd-on-docker

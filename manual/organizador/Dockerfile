@@ -1,13 +1,21 @@
 ###############################################################################
+# R Al Parque 
 # Dockerfile para el organizador
 # Use Rocker r-base
 # https://raw.githubusercontent.com/rocker-org/rocker/master/r-base/Dockerfile
 ###############################################################################
-
 FROM debian:testing
+# Mantenedor del conjunto actual. Los mantenedores de los elementos usados
+# Estand mencionados en las secciones
+MAINTAINER "Frans van Dunné" frans.vandunne@gmail.com
+
+###############################################################################
+## Rocker base-r
+
+#FROM debian:testing
 
 ## This handle reaches Carl and Dirk
-MAINTAINER "Carl Boettiger and Dirk Eddelbuettel" rocker-maintainers@eddelbuettel.com
+#MAINTAINER "Carl Boettiger and Dirk Eddelbuettel" rocker-maintainers@eddelbuettel.com
 
 ## Set a default user. Available via runtime flag `--user docker` 
 ## Add user to 'staff' group, granting them write privileges to /usr/local/lib/R/site.library
@@ -72,15 +80,18 @@ RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/ss
 # SSH login fix. Otherwise user is kicked off after login
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
+# Genera llaves para tener la carpeta .ssh
+RUN ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
+
 ### Set Up snow
 RUN install.r snow
-RUN install.r foreach
-RUN install.r doSNOW
+#RUN install.r foreach
+#RUN install.r doSNOW
 
 COPY . /usr/local/src/rscripts
 
 WORKDIR /usr/local/src/rscripts
 
-CMD ["/bin/bash"]
+#CMD ["/bin/bash"]
 
-#CMD ["Rscript", "organizador.R"]
+CMD ["Rscript", "organizador.R"]

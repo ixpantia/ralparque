@@ -25,8 +25,6 @@
 # http://stackoverflow.com/questions/17966055/makecluster-function-in-r-snow-hangs-indefinitely
 #############################################################################
 library("snow")
-library("foreach")
-library("doSNOW")
 
 #Create cluster
  
