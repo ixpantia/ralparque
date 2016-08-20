@@ -67,10 +67,20 @@ RUN apt-get update \
 
 RUN apt-get update && apt-get install -y openssh-server
 RUN mkdir /var/run/sshd
-RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN echo 'root:screencast' | chpasswd
+# Fix this to match debian instead of ubuntu
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # SSH login fix. Otherwise user is kicked off after login
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+
+## Fix PAM in sshd config 
+## http://stackoverflow.com/questions/18173889/cannot-access-centos-sshd-on-docker
+#RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+#RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config
+
+ENV NOTVISIBLE "in users profile"
+RUN echo "export VISIBLE=now" >> /etc/profile
 
 ### Set Up snow
 RUN install.r snow
@@ -81,4 +91,5 @@ WORKDIR /usr/local/src/rscripts
 # instancias de los artistas. 
 
 EXPOSE 22
-CMD ["/bin/bash", "docker-entrypoint.sh"]
+CMD ["/usr/sbin/sshd", "-D"]
+#CMD ["/bin/bash", "docker-entrypoint.sh"]
