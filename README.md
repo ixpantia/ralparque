@@ -2,22 +2,22 @@
 R Al Parque
 ===========
 
-Que es lo que obtienes cuando organizas una agrupacion (cluster) de roqueros (rockers)? Un festival!
+Que es lo que obtienes cuando organizas una agrupación (cluster) de roqueros (rockers)? Un festival!
 
 R Al Parque es una prueba de concepto para coordinar contenedores Docker y hacerlos trabajar en conjunto como un grupo (*EN:cluster*) de trabajadores R bajo coordinación del paquete `snow`. En este momento no le tenemos una aplicación otra que casos ejemplos, y si tienes una aplicación para la aproximación que describimos aquí nos encantaría escucharlo.
 
-Para hacerlo usamos contenedores [Docker](https://docker.com), con imagenes para R como disponibles en [Rocker](https://github.com/rocker-org/rocker) a los cuales incluimos [snow](https://cran.r-project.org/web/packages/snow/index.html).
+Para hacerlo usamos contenedores [Docker](https://docker.com), con imágenes para R como disponibles en [Rocker](https://github.com/rocker-org/rocker) a los cuales incluimos [snow](https://cran.r-project.org/web/packages/snow/index.html).
 
 Referencia
 ----------
 
-En la carpeta `"manual/referencia` hay un ejemplo de hacer un snow-cluster dentro de una misma maquina. En nuestro caso lo usamos para hacer correr el codigo en un mismo contenedor, y lo usamos como referencia para comparar el resultado después.
+En la carpeta `"manual/referencia` hay un ejemplo de hacer un snow-cluster dentro de una misma maquina. En nuestro caso lo usamos para hacer correr el código en un mismo contenedor, y lo usamos como referencia para comparar el resultado después.
 
 Para correrlo sigue los siguientes pasos (asumimos que tienes [Docker](https://docker.com) instalado y funcionando).
 
     $ cd manual/referencia
     $ sudo docker build -t referencia .
-    $ sudo docker run --name ejemplo -ti referencia
+    $ sudo docker run --name ejemplo -i referencia
 
 Verás en como parte del output, después de ver las funciones que asignamos a cada uno de los tres maquinas asignadas:
 
@@ -34,27 +34,14 @@ Orquestración manual
 El Parque
 ---------
 
-El primero paso es crear una red para los contenedores que vamos a iniciar. En otras palabras: necesitamos un parque para poner el podio. En Docker lo podemos [hacer asi](http://stackoverflow.com/questions/27937185/assign-static-ip-to-docker-container/35359185#35359185)
+El primero paso es crear una red para los contenedores que vamos a iniciar. En otras palabras: necesitamos un parque para poner el podio. En Docker lo podemos [hacer así](http://stackoverflow.com/questions/27937185/assign-static-ip-to-docker-container/35359185#35359185)
 
     $sudo docker network create --subnet=172.18.0.0/16 simonbolivar
-
-El organizador
---------------
-
-Necesitamos un [Mario Duarte](https://es.wikipedia.org/wiki/Rock_al_Parque) para tomar la iniciativa. En nuestro caso es el contenedor docker central que corre como el contenedor primario que dirije contenedores secundarios.
-
-### Arranca el organizador
-
-El organizador tiene su Dockerfile propio.
-
-    $ cd manual/organizador
-    $ sudo docker build -t organizador .
-    $ sudo docker run --name duarte -it organizador
 
 Los artistas
 ------------
 
-Nuestros artistas son los contenedores secundarios. Se construyen como instancias de un mismo Dockerfile
+Nuestros artistas son los contenedores secundarios. Se construyen como instancias de un mismo Dockerfile y hay que hacerlo antes de arrancar el organizador. Sin artistas no hay nada que se pueda organizar.
 
 ### Arranca los artistas
 
@@ -69,10 +56,40 @@ Y después incluimos tres actos en el festival
     $ sudo docker run -d -P --net simonbolivar --ip 172.18.0.3 --name fabulosos_cadillacs -it artista
     $ sudo docker run -d -P --net simonbolivar --ip 172.18.0.4 --name mana -it artista
 
-Orquestración Automatica
-========================
+El organizador
+--------------
+
+Necesitamos un [Mario Duarte](https://es.wikipedia.org/wiki/Rock_al_Parque) para tomar la iniciativa. En nuestro caso es el contenedor Docker central que corre como el contenedor primario que dirige contenedores secundarios.
+
+### Arranca el organizador
+
+El organizador tiene su Dockerfile propio.
+
+    $ cd manual/organizador
+    $ sudo docker build -t organizador .
+    $ sudo docker run --net simonbolivar --ip 172.18.0.10 --name duarte -it organizador
+
+Lo arrancamos dentro del parque simonbolivar, porque is no no puede comunicarse con los artistas.
+
+Ahora, el organizador primer se tiene que conectar con todos los artistas para estar seguro de que están, y intercambiar llaves. En el Dockerfile incluimos una clave estándar que es "artista".
+
+Por ejemplo para tocar el camarín de mana y pedirles una clave hay que hacer lo siguiente:
+
+    root@dce8b92d2453:~# ssh-copy-id root@172.18.0.4
+    /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/root/.ssh/id_rsa.pub"
+    /usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+    /usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+    root@172.18.0.4's password: 
+
+    Number of key(s) added: 1
+
+    Now try logging into the machine, with:   "ssh 'root@172.18.0.4'"
+    and check to make sure that only the key(s) you wanted were added.
+
+Orquestación Automática
+=======================
 
 Docker Compose
 --------------
 
-TODO: Orchestrar los contenedores para que arranquen en conjunto
+TODO: Orquestar los contenedores para que arranquen en conjunto

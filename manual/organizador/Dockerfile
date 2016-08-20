@@ -81,4 +81,6 @@ COPY . /usr/local/src/rscripts
 
 WORKDIR /usr/local/src/rscripts
 
-CMD ["Rscript", "organizador.R"]
+CMD ["/bin/bash"]
+
+#CMD ["Rscript", "organizador.R"]
