@@ -16,8 +16,8 @@ En la carpeta `"manual/referencia` hay un ejemplo de hacer un snow-cluster dentr
 Para correrlo sigue los siguientes pasos (asumimos que tienes [Docker](https://docker.com) instalado y funcionando).
 
     $ cd manual/referencia
-    $ sudo docker build -t referencia .
-    $ sudo docker run --name ejemplo -i referencia
+    $ docker build -t referencia .
+    $ docker run --name ejemplo -i referencia
 
 Verás en como parte del output, después de ver las funciones que asignamos a cada uno de los tres maquinas asignadas:
 
@@ -36,7 +36,7 @@ El Parque
 
 El primero paso es crear una red para los contenedores que vamos a iniciar. En otras palabras: necesitamos un parque para poner el podio. En Docker lo podemos [hacer así](http://stackoverflow.com/questions/27937185/assign-static-ip-to-docker-container/35359185#35359185)
 
-    $sudo docker network create --subnet=172.18.0.0/16 simonbolivar
+    $ docker network create --subnet=172.18.0.0/16 simonbolivar
 
 Los artistas
 ------------
@@ -48,13 +48,13 @@ Nuestros artistas son los contenedores secundarios. Se construyen como instancia
 Primero construimos la imagen genérica para los artistas
 
     $ cd manual/artistas
-    $ sudo docker build -t artista .
+    $ docker build -t artista .
 
 Y después incluimos tres actos en el festival
 
-    $ sudo docker run -d -P --net simonbolivar --ip 172.18.0.2 --name aterciopelados -it artista
-    $ sudo docker run -d -P --net simonbolivar --ip 172.18.0.3 --name fabulosos_cadillacs -it artista
-    $ sudo docker run -d -P --net simonbolivar --ip 172.18.0.4 --name mana -it artista
+    $ docker run -d -P --net simonbolivar --ip 172.18.0.2 --name aterciopelados -it artista
+    $ docker run -d -P --net simonbolivar --ip 172.18.0.3 --name fabulosos_cadillacs -it artista
+    $ docker run -d -P --net simonbolivar --ip 172.18.0.4 --name mana -it artista
 
 El organizador
 --------------
@@ -66,12 +66,12 @@ Necesitamos un [Mario Duarte](https://es.wikipedia.org/wiki/Rock_al_Parque) para
 El organizador tiene su Dockerfile propio.
 
     $ cd manual/organizador
-    $ sudo docker build -t organizador .
-    $ sudo docker run --net simonbolivar --ip 172.18.0.10 --name duarte -it organizador
+    $ docker build -t organizador .
+    $ docker run --net simonbolivar --ip 172.18.0.10 --name duarte -it organizador
 
-Lo arrancamos dentro del parque simonbolivar, porque is no no puede comunicarse con los artistas.
+Lo arrancamos dentro del parque simonbolivar, porque de otra forma no podria comunicarse con los artistas.
 
-Ahora, el organizador primer se tiene que conectar con todos los artistas para estar seguro de que están, y intercambiar llaves. Por eso al arrancar el organizador va a preguntar si se puede conectar con el artista, y va a preguntar por la clave:
+Ahora, el organizador se tiene que conectar con todos los artistas para estar seguro de que están, y para intercambiar llaves. Por eso al arrancar el organizador va a preguntar si se puede conectar con el artista, y va a preguntar por la clave:
 
     The authenticity of host '172.18.0.2 (172.18.0.2)' can't be established.
     ECDSA key fingerprint is SHA256:oyaLzw1rfFs3r//hQE6ScyNmxk5JXiFUR3M0yidKcpI.
@@ -88,7 +88,7 @@ Por hacer
 
 #### Conneccion automatica a los artistas
 
-TODO: Intenté hacer el paso arriba "passwordless", pero aún no no funciona. Lo que esperaba era que al usar ssh-copy-d para los tres artistas `snow::makeCluster` haría la coneccion de forma automatica.
+TODO: Intenté hacer el paso arriba "passwordless", pero aún no funciona. Lo que esperaba era que al usar ssh-copy-d para los tres artistas `snow::makeCluster` haría la coneccion de forma automatica.
 
 #### Orquestación Automática
 
