@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ralparque
+  namespace: dev
+spec:
+  selector:
+    k8s-app: ralparque
+  type: NodePort
+  ports:
+  - name: http
+    nodePort: 308080
+    port: 8080
+    targetPort: 8080
+    protocol: TCP
+
