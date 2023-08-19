@@ -29,6 +29,8 @@ Para hacerlo usamos contenedores [Docker](https://docker.com), con imágenes
 para R como disponibles en [Rocker](https://github.com/rocker-org/rocker) a los 
 cuales incluimos [snow](https://cran.r-project.org/web/packages/snow/index.html).
 
+[esquema de la solución propuesta](esquema.png)
+
 ## Referencia
 
 En la carpeta `"manual/referencia` hay un ejemplo de hacer un snow-cluster
@@ -126,4 +128,5 @@ haría la coneccion de forma automatica.
 
 #### Orquestación Automática 
 TODO: Orquestar los contenedores para que arranquen en conjunto usando Docker
-Compose, y quizas despues en combinación con Swarm.
+Compose, y quizás despues en combinación con Swarm.
+TODO: Orquestar todos los contenedores dentro de Kubernetes.
