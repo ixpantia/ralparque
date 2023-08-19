@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ralparque-deployment
+spec:
+  selector:
+    matchLabels:
+      app: organizador
+  replicas: 1 
+  template:
+    metadata:
+      labels:
+        app: organizador
+    spec:
+      containers:
+      - name: organizador
+        image: organizador:v.0.0.1
+        ports:
+        - containerPort: 8080
+
