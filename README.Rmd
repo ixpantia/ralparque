@@ -99,8 +99,8 @@ El organizador tiene su Dockerfile propio.
     $ docker build -t organizador .
     $ docker run --net simonbolivar --ip 172.18.0.10 --name duarte -it organizador
 
-Lo arrancamos dentro del parque simonbolivar, porque de otra forma no podria comunicarse
-con los artistas.
+Lo arrancamos dentro del parque simonbolivar, porque de otra forma no podria 
+comunicarse con los artistas.
 
 Ahora, el organizador se tiene que conectar con todos los artistas para
 estar seguro de que están, y para intercambiar llaves. Por eso al arrancar el organizador
@@ -115,18 +115,34 @@ va a preguntar si se puede conectar con el artista, y va a preguntar por la clav
 En el Dockerfile incluimos una clave estándar que es "artista", la cual es la
 respuesta por los tres.
 
+Siguiendo el ejemplo de arriba, para ingresar ese contenedor creado con la 
+imagen de artista a traves de ssh hacemos:
+
+```
+ssh root@172.27.0.2
+```
+Y cuando nos pide la clave, ingresamos "artista".
+
 Si miras el codigo r en `organizador.R` veras porque pide por la clave de los
 artistas ya definidos arriba: incluimos la direccion IP en el código usando la
 funcion `makeCluster`.
 
 
-## Por hacer
-#### Conneccion automatica a los artistas
-TODO: Intenté hacer el paso arriba "passwordless", pero aún no funciona. Lo que
-esperaba era que al usar ssh-copy-d para los tres artistas `snow::makeCluster`
-haría la coneccion de forma automatica.
+## Docker Compose
 
-#### Orquestación Automática 
-TODO: Orquestar los contenedores para que arranquen en conjunto usando Docker
-Compose, y quizás despues en combinación con Swarm.
-TODO: Orquestar todos los contenedores dentro de Kubernetes.
+Ingresar a la carpeta `/compose` de este repositorio. 
+
+Levantar los contenedores con `docker compose` de la siguiente forma:
+
+```
+sudo docker compose up 
+```
+
+Para ingresar al contenedor organizador: 
+`sudo docker exec -it organizador bash`
+
+Luego, dentro del contenedor de organizador, haces `Rscript organizador` y te
+va a solicitar la clave de los 3 workers del cluster ("artista"), luego de 
+ingresarla para los 3 workers, verás el resultado en pantalla. 
+
+## Kubernetes
