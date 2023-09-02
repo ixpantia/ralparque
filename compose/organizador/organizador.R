@@ -28,7 +28,7 @@ library("snow")
 
 #Create cluster
  
-clus <- makeCluster(c("172.18.0.2", "172.18.0.3", "172.18.0.4"), type = "SOCK")
+clus <- makeCluster(c("17.18.0.2", "17.18.0.3", "17.18.0.4"), type = "SOCK")
  
 #Option 1. Declare the function for each node
  

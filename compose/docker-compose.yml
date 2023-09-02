@@ -1,40 +1,48 @@
 version: "3"
 networks:
   simon_bolivar:
-    external: false
+    ipam:
+     config:
+       - subnet: 17.18.0.0/16
+         gateway: 17.18.0.1
+         
 services:
   mana:
     image: artista
     container_name: mana
     networks:
-      - simon_bolivar
+       simon_bolivar:
+         ipv4_address: 17.18.0.2
     restart: always
     ports:
-        - "9991:22"
+        - "9981:22"
   
   aterciopelados:
     image: artista
     container_name: aterciopelados
     networks:
-      - simon_bolivar
+      simon_bolivar:
+         ipv4_address: 17.18.0.3
     restart: always
     ports:
-      - "9992:22"
+      - "9982:22"
       
   fabulosos_cadillacs:
     image: artista
-    container_name: fabulosos_cadillacs9
+    container_name: fabulosos_cadillacs
     networks:
-      - simon_bolivar
+      simon_bolivar:
+         ipv4_address: 17.18.0.4
     restart: always
     ports:
-      - "9993:22"
+      - "9983:22"
       
   organizador:
     image: organizador
     container_name: organizador
     networks:
-      - simon_bolivar
+      simon_bolivar:
+         ipv4_address: 17.18.0.5
     restart: always
     ports:
-      - "9994:22"
+      - "9984:22"
