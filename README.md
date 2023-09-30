@@ -2,15 +2,15 @@
 
 # R Al Parque
 
-Que es lo que obtienes cuando organizas una agrupación (cluster) de
-roqueros (rockers)? Un festival!
+Que es lo que obtienes c otro cambio uando organizas una agrupación
+(cluster) de roqueros (rockers)? Un festival!
 
-R Al Parque es una prueba de concepto para coordinar contenedores Docker
-y hacerlos trabajar en conjunto como un grupo (*EN:cluster*) de
-trabajadores R bajo coordinación del paquete `snow`. En este momento no
-le tenemos una aplicación otra que casos ejemplos, y si tienes una
-aplicación para la aproximación que describimos aquí nos encantaría
-escucharlo.
+1.  R Al Parque es una prueba de concepto para coordinar contenedores
+    Docker y hacerlos trabajar en conjunto como un grupo (*EN:cluster*)
+    de trabajadores R
+2.  bajo coordinación del paquete `snow`. En este momento no le tenemos
+    una aplicación otra que casos ejemplos, y si tienes una aplicación
+    para la aproximación que describimos aquí nos encantaría escucharlo.
 
 Para hacerlo usamos contenedores [Docker](https://docker.com), con
 imágenes para R como disponibles en
