@@ -89,8 +89,10 @@ El organizador tiene su Dockerfile propio.
     $ docker build -t organizador .
     $ docker run --net simonbolivar --ip 172.18.0.10 --name duarte -it organizador
 
-Lo arrancamos dentro del parque simonbolivar, porque de otra forma no
-podria comunicarse con los artistas.
+\<\<\<\<\<\<\< HEAD Lo arrancamos dentro del parque simonbolivar, porque
+de otra forma no podria ======= Lo arrancamos dentro del parque
+simonbolivar, porque de otra forma no podria \>\>\>\>\>\>\> master
+comunicarse con los artistas.
 
 Ahora, el organizador se tiene que conectar con todos los artistas para
 estar seguro de que están, y para intercambiar llaves. Por eso al
@@ -106,20 +108,30 @@ artista, y va a preguntar por la clave:
 En el Dockerfile incluimos una clave estándar que es “artista”, la cual
 es la respuesta por los tres.
 
+Siguiendo el ejemplo de arriba, para ingresar ese contenedor creado con
+la imagen de artista a traves de ssh hacemos:
+
+    ssh root@172.27.0.2
+
+Y cuando nos pide la clave, ingresamos “artista”.
+
 Si miras el codigo r en `organizador.R` veras porque pide por la clave
 de los artistas ya definidos arriba: incluimos la direccion IP en el
-código usando la funcion `makeCluster`.
+código usando la función `makeCluster`.
 
-## Por hacer
+## Docker Compose
 
-#### Conneccion automatica a los artistas
+Ingresar a la carpeta `/compose` de este repositorio.
 
-TODO: Intenté hacer el paso arriba “passwordless”, pero aún no funciona.
-Lo que esperaba era que al usar ssh-copy-d para los tres artistas
-`snow::makeCluster` haría la coneccion de forma automatica.
+Levantar los contenedores con `docker compose` de la siguiente forma:
 
-#### Orquestación Automática
+    sudo docker compose up 
 
-TODO: Orquestar los contenedores para que arranquen en conjunto usando
-Docker Compose, y quizás despues en combinación con Swarm. TODO:
-Orquestar todos los contenedores dentro de Kubernetes.
+Para ingresar al contenedor organizador:
+`sudo docker exec -it organizador bash`
+
+Luego, dentro del contenedor de organizador, haces `Rscript organizador`
+y te va a solicitar la clave de los 3 workers del cluster (“artista”),
+luego de ingresarla para los 3 workers, verás el resultado en pantalla.
+
+## Kubernetes

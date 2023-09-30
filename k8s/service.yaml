@@ -5,7 +5,8 @@ metadata:
   namespace: dev
 spec:
   selector:
-    k8s-app: ralparque
+    type: ralparque
+    k8s-app: ralparquea
   type: NodePort
   ports:
   - name: http
