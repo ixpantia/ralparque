@@ -1,17 +1,57 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: ralparque
-  namespace: dev
+  name: organizador
+  namespace: mlops
 spec:
   selector:
     type: ralparque
-    k8s-app: ralparquea
+    k8s-app: ralparque
   type: NodePort
   ports:
   - name: http
-    nodePort: 308080
     port: 8080
     targetPort: 8080
     protocol: TCP
-
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mana
+  namespace: mlops
+  labels:
+    artista: mana
+spec:
+  clusterIP: None
+  ports:
+  - port: 22
+  selector:
+    artista: mana
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fabulosos-cadillacs
+  namespace: mlops
+  labels:
+    artista: fabulosos-cadillacs
+spec:
+  clusterIP: None
+  ports:
+  - port: 22
+  selector:
+    artista: fabulosos-cadillacs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aterciopelados
+  namespace: mlops
+  labels:
+    artista: aterciopelados
+spec:
+  clusterIP: None
+  ports:
+  - port: 22
+  selector:
+    artista: aterciopelados
