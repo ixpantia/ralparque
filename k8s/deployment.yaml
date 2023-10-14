@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: organizador
+  namespace: mlops
+spec:
+  selector:
+    matchLabels:
+      app: ralparque
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ralparque
+    spec:
+      containers:
+      - name: organizador
+        image: localhost:32000/organizador:v0.0.2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mana
+  namespace: mlops
+spec:
+  selector:
+    matchLabels:
+      app: ralparque
+      artista: mana
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: ralparque
+        artista: mana
+    spec:
+      containers:
+      - name: mana
+        image: localhost:32000/artista:v0.0.4
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fabulosos-cadillacs
+  namespace: mlops
+spec:
+  selector:
+    matchLabels:
+      app: ralparque
+      artista: fabulosos-cadillacs
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ralparque
+        artista: fabulosos-cadillacs
+    spec:
+      containers:
+      - name: fabulosos-cadillacs
+        image: localhost:32000/artista:v0.0.4
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aterciopelados
+  namespace: mlops
+spec:
+  selector:
+    matchLabels:
+      app: ralparque
+      artista: aterciopelados
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ralparque
+        artista: aterciopelados
+    spec:
+      containers:
+      - name: aterciopelados
+        image: localhost:32000/artista:v0.0.4
